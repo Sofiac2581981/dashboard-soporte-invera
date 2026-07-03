@@ -167,6 +167,7 @@ with c1:
         showlegend=True, height=330, margin=dict(t=10, b=10, l=10, r=10),
         legend=dict(orientation="h", y=-0.1),
     )
+    st.caption("Distribución por estado")
     st.plotly_chart(fig_est, use_container_width=True)
 
 with c2:
@@ -186,8 +187,8 @@ with c2:
     fig_cat.update_traces(textposition="outside")
     fig_cat.update_layout(
         showlegend=False, height=330, margin=dict(t=10, b=10, l=10, r=40),
-        title="Tiempo de resolución por categoría",
     )
+    st.caption("Tiempo de resolución por categoría (horas, mediana)")
     st.plotly_chart(fig_cat, use_container_width=True)
 
 # Segunda fila del cuello de botella: primera respuesta vs resolución por prioridad
@@ -201,11 +202,11 @@ with c3:
     fig_pr.add_bar(name="1ª respuesta", x=prio_order, y=tpr.values, marker_color=GRIS)
     fig_pr.add_bar(name="Resolución", x=prio_order, y=trs.values, marker_color=AZUL)
     fig_pr.update_layout(
-        barmode="group", height=320, margin=dict(t=40, b=10, l=10, r=10),
-        title="Respuesta vs Resolución por prioridad (medianas, hs)",
-        legend=dict(orientation="h", y=1.12),
+        barmode="group", height=320, margin=dict(t=20, b=10, l=10, r=10),
+        legend=dict(orientation="h", y=1.08),
         yaxis_title="Horas",
     )
+    st.caption("Respuesta vs resolución por prioridad (horas, mediana)")
     st.plotly_chart(fig_pr, use_container_width=True)
 
 with c4:
@@ -225,9 +226,9 @@ with c4:
         )
         fig_tb.update_traces(textposition="outside")
         fig_tb.update_layout(
-            showlegend=False, height=320, margin=dict(t=40, b=10, l=10, r=40),
-            title="Bugs: resolución por subtipo",
+            showlegend=False, height=320, margin=dict(t=20, b=10, l=10, r=40),
         )
+        st.caption("Bugs: resolución por subtipo (horas, promedio)")
         st.plotly_chart(fig_tb, use_container_width=True)
     else:
         st.info("No hay bugs con los filtros actuales.")
@@ -265,9 +266,9 @@ with c5:
                       annotation_text="Promedio global", annotation_position="right")
     fig_cli.update_layout(
         height=380, margin=dict(t=20, b=10, l=10, r=10),
-        title="Carga vs satisfacción (tamaño = horas de resolución)",
         coloraxis_showscale=False,
     )
+    st.caption("Carga vs satisfacción (tamaño = horas de resolución)")
     st.plotly_chart(fig_cli, use_container_width=True)
 
 with c6:
@@ -275,6 +276,7 @@ with c6:
     tabla["satisfaccion"] = tabla["satisfaccion"].round(2)
     tabla["resolucion"] = tabla["resolucion"].round(0)
     tabla.columns = ["Cliente", "Tickets", "Satisf.", "Resol. (hs)", "Escalados"]
+    st.caption("Detalle por cliente (semáforo en satisfacción)")
     st.dataframe(
         tabla.style.background_gradient(subset=["Satisf."], cmap="RdYlGn", vmin=1, vmax=5),
         hide_index=True, use_container_width=True, height=380,
