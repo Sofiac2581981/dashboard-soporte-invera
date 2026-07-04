@@ -1,6 +1,6 @@
 """
 Dashboard de Reporting de Soporte — Challenge Analista de Operaciones (Invera)
-Autor: Mariano Caballero
+Autor: Franco Herrera
 Stack: Streamlit + Plotly + pandas
 
 El dashboard esta organizado alrededor de las 5 preguntas que el lider del equipo
@@ -87,7 +87,7 @@ df = cargar_datos()
 # SIDEBAR — FILTROS
 # --------------------------------------------------------------------------- #
 st.sidebar.title("🎫 Soporte Operaciones")
-st.sidebar.caption("Challenge — Invera · Mariano Caballero")
+st.sidebar.caption("Challenge — Invera · Franco Herrera")
 st.sidebar.markdown("---")
 st.sidebar.subheader("Filtros")
 
