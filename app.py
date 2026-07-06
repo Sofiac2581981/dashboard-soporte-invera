@@ -320,6 +320,15 @@ cli_peor_val = df.groupby("cliente")["satisfaccion_cliente"].mean().min()
 pct_bug = (df["categoria"] == "Bug").mean() * 100
 esc_bug = df[df["categoria"] == "Bug"]["escalado_bool"].mean() * 100
 
+# Insight: subtipo de bug concentrado en un solo cliente
+bugs_df = df[df["categoria"] == "Bug"]
+_sub = "Error de mapeo de cuentas"
+_mapeo = bugs_df[bugs_df["tipo_bug"] == _sub]
+mapeo_total = len(_mapeo)
+mapeo_clientes = _mapeo["cliente"].nunique()
+mapeo_cliente = _mapeo["cliente"].mode()[0] if mapeo_total else ""
+mapeo_abiertos = int((_mapeo["estado"] != "Cerrado").sum())
+
 col_a, col_b = st.columns([1.1, 1])
 
 with col_a:
@@ -337,6 +346,11 @@ with col_a:
             <li><b>Rescatar a {cli_peor}:</b> satisfacción {cli_peor_val:.2f}/5 (la más baja
                 por lejos) y el peor tiempo de resolución. Cliente en riesgo — corresponde
                 una llamada de gestión, no solo cerrar tickets.</li>
+            <li><b>Atacar la causa raíz de {mapeo_cliente}:</b> el "{_sub}" aparece
+                <b>{mapeo_total} veces y siempre en {mapeo_cliente}</b> (ningún otro cliente lo
+                tiene). No es un bug general del producto: es un problema de configuración propio
+                de ese cliente. Conviene resolverlo de raíz de una vez — {mapeo_abiertos} de esos
+                {mapeo_total} siguen sin cerrar (TKT-042 y TKT-057).</li>
           </ol>
         </div>
         """,
